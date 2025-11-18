@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ale | Soporte y Reparación PC</title>
+    <meta name="description" content="Soporte Técnico de confianza con más de 20 años de experiencia. Reparación de PC, Notebooks, WiFi y dispositivos Smart. ¡Soluciones garantizadas a domicilio en Uruguay! Contacto directo por WhatsApp.">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Inter:wght@800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Soporte y Reparación de Computadoras",
+      "name": "Ale, Técnico de PC y Notebook con 20+ Años de Experiencia",
+      "description": "Servicio de reparación de PC, notebooks, optimización de red (WiFi) y soporte de dispositivos Smart. Atención a domicilio con enfoque en la confianza y soluciones duraderas.",
+      "areaServed": {
+        "@type": "State",
+        "name": "Uruguay"
+      },
+      "provider": {
+        "@type": "Person",
+        "name": "Alejandro (Ale)"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "atención al cliente",
+        "telephone": "+59894691690",
+        "areaServed": "UY"
+      }
+    }
+    </script>
+
+    <style>
+        /* ========================================= */
+        /* === 1. VARIABLES & BASE STYLES (UI/CONSOLA) === */
+        /* ========================================= */
+        :root {
+            --color-bg: #000000;
+            --color-text: #F0F0F0;
+            --color-accent: #00FFFF; /* Cian Puro y Frío */
+            --color-secondary: #FF00FF; /* Magenta (Para elementos de alerta/acción) */
+            --color-border: #151515;
+            --font-display: 'Inter', sans-serif;
+            --font-code: 'Roboto Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        a { text-decoration: none; color: var(--color-text); }
+        
+        body {
+            font-family: var(--font-code);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 0 40px; 
+        }
+        
+        /* TIPOGRAFÍA IMPACTANTE (AJUSTADA PARA PROLIJIDAD) */
+        h1 { 
+            font-family: var(--font-display); 
+            /* Min: 2.2rem, Fluid: 7vw, Max: 6rem */
+            font-size: clamp(2.2rem, 7vw, 6rem); 
+            font-weight: 900; 
+            line-height: 1.05; 
+            /* Menos agresivo que antes */
+            letter-spacing: clamp(-2px, -0.5vw, -3px); 
+            margin-bottom: 25px; 
+        }
+        h2 { 
+            font-family: var(--font-display); 
+            /* Min: 2rem, Fluid: 5vw, Max: 3.2rem */
+            font-size: clamp(2rem, 5vw, 3.2rem); 
+            font-weight: 900; 
+            text-align: center; 
+            /* Margen más equilibrado */
+            margin-bottom: 80px; 
+            line-height: 1.1; 
+        }
+        h3 { 
+            font-family: var(--font-code); 
+            font-size: 1.5em; 
+            font-weight: 700; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+        }
+        p { font-family: var(--font-code); font-weight: 300; }
+
+        /* ========================================= */
+        /* === 2. FONDO Y NAVEGACIÓN === */
+        /* ========================================= */
+        #matrixCanvas {
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; 
+            opacity: 0.2; 
+            pointer-events: none;
+        }
+        
+        nav {
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(0, 0, 0, 0.9); 
+            border-bottom: 1px solid var(--color-border); 
+            z-index: 100;
+        }
+        .nav-links a:hover { color: var(--color-accent); opacity: 1 !important; }
+
+        /* HERO SECTION (Padding ajustado) */
+        .hero { 
+            position: relative; 
+            padding: 200px 0 120px; 
+            overflow: hidden; 
+        }
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            align-items: start;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CTA BUTTON (Padding y font ajustados) */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            /* Tamaño más limpio */
+            font-size: 1.5em; 
+            font-weight: 700;
+            /* Padding estandarizado */
+            padding: 20px 40px; 
+            border: 2px solid var(--color-accent);
+            border-radius: 0;
+            transition: all 0.1s ease;
+            box-shadow: 4px 4px 0 var(--color-secondary);
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            border-color: var(--color-secondary);
+            box-shadow: 6px 6px 0 var(--color-accent);
+            transform: translate(-3px, -3px); 
+        }
+
+        /* IMAGEN - SIMULACIÓN DE CONSOLA */
+        .image-functional {
+            width: 100%; 
+            height: 500px; 
+            background-color: #0A0A0A;
+            border: 1px solid var(--color-accent); 
+            padding: 20px;
+            overflow: hidden; 
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+            position: relative;
+        }
+        .console-text {
+            color: var(--color-accent); font-family: var(--font-code);
+            font-size: 1em; white-space: pre-wrap;
+        }
+
+        /* ========================================= */
+        /* === WHATSAPP FLOTANTE STYLE === */
+        /* ========================================= */
+        .whatsapp-float {
+            position: fixed;
+            /* Usamos el verde oficial de WhatsApp */
+            background-color: #25d366; 
+            color: #FFF !important;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            /* Centrar el icono */
+            line-height: 60px; 
+            z-index: 9999; /* Asegurar que esté siempre encima */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
+        }
+
+        /* ========================================= */
+        /* === 3. SECCIONES Y COMPONENTES === */
+        /* ========================================= */
+        /* Padding de sección estandarizado */
+        .section { 
+            padding: 120px 0; 
+            background-color: var(--color-bg); 
+        }
+        .section:nth-child(even) { background-color: #0A0A0A; }
+        .section h2 span { color: var(--color-accent); }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 40px;
+        }
+        .service-card {
+            padding: 30px; border: 1px solid var(--color-border);
+            background-color: #0A0A0A; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .service-card:hover { border-color: var(--color-accent); box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
+
+        /* FORMULARIO */
+        .form-container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background-color: #050505; 
+            padding: 40px; 
+            border: 3px solid var(--color-secondary); 
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3); 
+        }
+        .form-container input, .form-container textarea {
+            border: 1px solid var(--color-border);
+            background-color: var(--color-bg); 
+            color: var(--color-text); 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            font-family: var(--font-code);
+            width: 100%;
+        }
+
+        /* FOOTER CORREGIDO */
+        footer p {
+            /* COLOR CORREGIDO para legibilidad */
+            color: #999; 
+            font-size: 0.8em; 
+            font-family: var(--font-code);
+        }
+
+        /* ========================================= */
+        /* === 4. ANIMACIONES Y RESPONSIVIDAD === */
+        /* ========================================= */
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .animated { opacity: 1; transform: translateY(0); }
+
+        /* Tabletas Grandes / Escritorios Pequeños (Max 1000px) */
+        @media (max-width: 1000px) {
+            .container { padding: 0 20px; }
+            
+            /* Hero Layout: Stack columns */
+            .hero-layout { 
+                grid-template-columns: 1fr; 
+                gap: 50px; 
+            }
+            .hero-content { 
+                padding-left: 0; 
+                text-align: center; 
+            }
+            
+            /* Console Image */
+            .image-functional { 
+                height: 350px; 
+                order: -1; 
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            /* CTA Button: Full width */
+            .cta-button { 
+                width: 100%; 
+                margin-top: 30px; 
+            }
+            
+            /* Sections: Reduced padding */
+            .section { 
+                padding: 80px 0; 
+            }
+            h2 { 
+                margin-bottom: 50px; 
+            }
+        }
+
+        /* Tabletas Pequeñas / Móviles Grandes (Max 768px) */
+        @media (max-width: 768px) {
+            /* Navigation: Hide links */
+            .nav-links { 
+                display: none; 
+            }
+            nav .container {
+                justify-content: center; 
+            }
+            
+            /* Service Grid: Force single column stack */
+            .service-grid {
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+
+            /* Form Padding */
+            .form-container {
+                padding: 30px;
+            }
+            
+            /* WHATSAPP FLOTANTE: Un poco más pequeño en móvil */
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 25px;
+                line-height: 50px;
+            }
+        }
+
+        /* Móviles Pequeños (Max 480px) */
+        @media (max-width: 480px) {
+            .container { padding: 0 15px; }
+            
+            .hero { padding: 180px 0 80px; } 
+            
+            /* Console Image: Even shorter for small viewports */
+            .image-functional { 
+                height: 200px; 
+                padding: 10px;
+            }
+            .console-text {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 40px;">
+            <div class="logo" style="font-family: var(--font-display); font-size: 1.8em; font-weight: 900;">PC <span style="color: var(--color-accent);">EXPRESS</span></div>
+            <ul class="nav-links" style="list-style: none; display: flex; gap: 30px;">
+                <li><a href="#servicios" style="opacity: 0.7;">SERVICIOS</a></li>
+                <li><a href="#proyectos" style="opacity: 0.7;">SOLUCIONES</a></li>
+                <li><a href="#contacto" style="color: var(--color-secondary); font-weight: 700;">CONTACTO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="container hero-layout">
+            <div class="image-functional animate-on-scroll">
+                <p class="console-text" id="consoleText"></p>
+            </div>
+
+            <div class="hero-content" style="padding-left: 60px;">
+
+                <h2 class="animate-on-scroll">¡Hola! Soy Ale, Tu Técnico de PC con Más de 20 Años de <span style="color: var(--color-accent);">Confianza</span>.</h2>
+                
+                <p class="animate-on-scroll" style="transition-delay: 0.2s;">
+                
+                <a href="#contacto" class="cta-button animate-on-scroll" style="transition-delay: 0.4s;">
+                    ¡HABLEMOS! SOLICITAR ASISTENCIA DIRECTA
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="servicios">
+        <div class="container">
+            <h2 class="animate-on-scroll">Servicios:  <span style="color: var(--color-accent);">Reparación de PC y Notebooks</span></h2>
+            <div class="service-grid">
+                <div class="service-card animate-on-scroll">
+                    <h3><span class="icon">💻</span> Diagnóstico y Reparación de Hardware/Software</h3>
+                    <p>Devuelvo la vida a tu equipo, realizando mantenimiento profundo y soluciones a fallas críticas en tu PC o Notebook para que funcione como el primer día.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.1s;">
+                    <h3><span class="icon">📡</span> Ayuda Remota con Programas y Sistemas Operativos</h3>
+                    <p>Gestión completa de software. **Instalo, desinstalo y arreglo** cualquier programa, suite ofimática o aplicación que te esté dando problemas, sin que salgas de tu casa. Soluciones inmediatas.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.2s;">
+                    <h3><span class="icon">🔗</span> Soporte para tu Casa Inteligente y Periféricos</h3>
+                    <p>Te ayudo a configurar tu WiFi, asistentes de voz (Alexa, Google) y todos tus dispositivos Smart para que se integren y funcionen perfectamente en tu hogar.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <h3><span class="icon">📶</span> Optimización y Aumento de Señal WiFi</h3>
+                    <p>Configuro y optimizo tu router y tu red para asegurar que la señal de Internet sea fuerte y estable en cada rincón de tu casa u oficina.</p>
+</div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <h3><span class="icon">🎯</span> CONSULTORÍA Y ASESORAMIENTO</h3>
+                    <p>Si tienes un inconveniente con la tecnología, consultas sobre la inteligencia artificial o cualquier duda puedes incluírla en el formulario al final del sitio que te responderé a la brevedad. </p>
+</div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <h3><span class="icon">💡</span> Creación de Sitios Web</h3>
+                    <p>Convierte tu idea o tu negocio en una pagina web de aterrizaje. Con costos incomparablemente accesibles. No dejes pasar esta oportunidad. </p>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="proyectos">
+        <div class="container">
+            <h2 class="animate-on-scroll">Soluciones: <span style="color: var(--color-accent);">Reparación, Upgrades y Recuperación de Datos</span></h2>
+            <div class="service-grid" style="gap: 20px;">
+                <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
+                    <h3><span class="icon">🚀</span> Potenciar tu PC (Upgrades de Hardware)</h3>
+                    <p>Le doy la potencia extra que necesita tu equipo, instalando RAM o discos SSD para que no tengas que comprar una máquina nueva. Máximo rendimiento garantizado.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
+                    <h3><span class="icon">🔄</span> Cambio de Windows o Mac sin Perder Archivos</h3>
+                    <p>Hago la transición segura entre sistemas operativos o versiones, asegurando que todos tus archivos y configuraciones permanezcan intactos.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
+                    <h3><span class="icon">🔬</span> Rescato tus Archivos (Servicio de Data Recovery)</h3>
+                    <p>Si tu disco duro falló, tengo protocolos de emergencia para intentar recuperar tus fotos, videos, trabajos y documentos más importantes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contacto" style="padding-bottom: 100px;">
+        <div class="container" style="max-width: 800px; text-align: center;">
+            <h2 class="animate-on-scroll">Hablemos Directo (¡Mándame un <span style="color: var(--color-accent);">WhatsApp</span>!)</h2>
+            
+            <div class="form-container animate-on-scroll">
+                <input type="text" id="inputName" placeholder="NOMBRE COMPLETO" required>
+                <input type="email" id="inputEmail" placeholder="EMAIL DE CONTACTO (Opcional)">
+                <textarea id="inputQuery" placeholder="DESCRIBE TU PROBLEMA O REQUERIMIENTO (Sé lo más específico posible)" rows="4" required></textarea>
+                
+                <button type="button" class="cta-button" id="whatsapp-button" style="width: 100%; font-size: 1.5em; border: 2px solid var(--color-accent); box-shadow: 4px 4px 0 var(--color-secondary);">
+                    ENVIAR MENSAJE POR WHATSAPP >>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 30px 0; border-top: 1px solid var(--color-border); text-align: center;">
+        <div class="container">
+            <p style="font-size: 0.8em; font-family: var(--font-code);">&copy; 2025 Ale - Tu Técnico de Confianza. TODOS LOS DERECHOS RESERVADOS.</p>
+        </div>
+    </footer>
+    
+    <a href="https://api.whatsapp.com/send?phone=59894691690&text=Hola%20Ale,%20necesito%20soporte%20t%C3%A9cnico%20urgente.%20%C2%BFMe%20puedes%20ayudar?" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // === 1. MATRIX CODE RAIN ANIMATION (Canvas) ===
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        const font_size = 18;
+        let columns = width / font_size;
+        let drops = [];
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&(){}[]:;,.+-*/'; 
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+            ctx.font = font_size + 'px ' + 'var(--font-code)';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+                if (drops[i] * font_size > 0) {
+                    const brightText = chars.charAt(Math.floor(Math.random() * chars.length));
+                    ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                    ctx.fillText(brightText, i * font_size, drops[i] * font_size - font_size);
+                }
+
+                if (drops[i] * font_size > height && Math.random() > 0.9) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            const newColumns = width / font_size;
+            if (newColumns !== columns) {
+                 columns = newColumns;
+                 drops = [];
+                 for (let x = 0; x < columns; x++) {
+                    drops[x] = 1;
+                }
+            }
+        });
+
+        setInterval(drawMatrix, 50); 
+
+        // === 2. CONSOLA TYPING EFFECT CON DATOS DINÁMICOS Y REPETICIÓN ===
+
+        const consoleTextElement = document.getElementById('consoleText');
+        let charIndex = 0;
+        let typingActive = false;
+
+        function generateConsoleText() {
+            // Datos Reales del Navegador/Pantalla
+            const screenRes = `${window.screen.width}x${window.screen.height}px`;
+            const browser = navigator.userAgent.includes('Chrome') ? 'CHROME' : (navigator.userAgent.includes('Firefox') ? 'FIREFOX' : 'OTHER');
+            
+            // Datos Simulados y Aleatorios
+            const cpuLoad = (Math.random() * (15 - 5) + 5).toFixed(1); 
+            const memoryUsage = (Math.random() * (7 - 3) + 3).toFixed(1); 
+            const memoryTotal = (Math.random() * (32 - 8) + 8).toFixed(0); 
+            const latency = (Math.random() * (50 - 10) + 10).toFixed(0); 
+
+            // MENSAJE AMIGABLE EN LA CONSOLA
+            return `
+> BOOTING "ALE'S SUPPORT ASSISTANT"...
+> COMO EXPERTO EN EL RUBRO, TE OFREZCO SOLUCIONES REALES, DURADERAS Y DE CONFIANZA PARA TU PC, NOTEBOOK Y DISPOSITIVOS SMART. 
+> OLVIDATE DE LOS DOLORES DE CABEZA TÉCNICOS.
+> COMUNICATE HOY MISMO PARA RESOLVERLO TODO.
+> SCANNING CLIENT SYSTEM [LOCAL_ACCESS]...
+> CLIENT_BROWSER: ${browser}
+> CLIENT_RESOLUTION: ${screenRes}
+>
+> --- DIAGNOSTIC REPORT START ---
+> CPU_LOAD_AVG: ${cpuLoad}%
+> MEMORY_USAGE: ${memoryUsage}GB / ${memoryTotal}GB (NOMINAL)
+> PING_LATENCY: ${latency}ms (OPTIMAL)
+>
+> CONTACTING ALE FOR SOLUTION...
+> INPUT: _
+            `;
+        }
+
+        let currentText = generateConsoleText();
+
+        function typeWriterLoop() {
+            if (charIndex < currentText.length) {
+                consoleTextElement.innerHTML += currentText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriterLoop, 40);
+            } else {
+                // Escritura terminada: Esperar, generar nuevos datos y reiniciar
+                setTimeout(() => {
+                    consoleTextElement.innerHTML = '';
+                    charIndex = 0;
+                    currentText = generateConsoleText(); // Genera nuevos datos en cada loop
+                    typeWriterLoop();
+                }, 5000); // Espera 5 segundos antes de reiniciar
+            }
+        }
+        
+        // === 3. SCROLL ANIMATIONS ===
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    
+                    if (entry.target.classList.contains('image-functional') && !typingActive) {
+                        typeWriterLoop();
+                        typingActive = true;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // === 4. WHATSAPP SCRIPT (para el botón del formulario) ===
+        document.getElementById('whatsapp-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('inputName').value;
+            const email = document.getElementById('inputEmail').value;
+            const query = document.getElementById('inputQuery').value;
+            
+            // Validar que los campos principales no estén vacíos
+            if (!name.trim() || !query.trim()) {
+                alert('ERROR: Nombre y Descripción del Requerimiento son obligatorios.');
+                return;
+            }
+
+            // Construir el mensaje de WhatsApp (Mensaje con referencia a Ale)
+            const message = `
+*--- NUEVO CONTACTO DE LA WEB (VÍA ALE) ---*
+*Nombre:* ${name.trim()}
+*Email:* ${email.trim() || 'No proporcionado'}
+*Consulta/Falla:*
+${query.trim()}
+`;
+            
+            // Número de Uruguay: +598 94 691 690
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://api.whatsapp.com/send?phone=59894691690&text=${encodedMessage}`;
+            
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+</body>
+</html>
