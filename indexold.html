@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contralamaquina | Reparación de Computadoras en Ciudad de la Costa</title>
-    <meta name="description" content="Reparación de computadoras y notebooks en Ciudad de la Costa — Neptunia, El Pinar, Salinas, Pinamar y Solymar. Diagnóstico gratis, atención a domicilio sin cargo. WhatsApp con Ale: 094 691 690.">
+    <title>Ale | Soporte y Reparación PC</title>
+    <meta name="description" content="Soporte Técnico de confianza con más de 20 años de experiencia. Reparación de PC, Notebooks, WiFi y dispositivos Smart. ¡Soluciones garantizadas a domicilio en Uruguay! Contacto directo por WhatsApp.">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Inter:wght@800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,17 +12,14 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Contralamaquina",
-      "description": "Reparación de computadoras, notebooks, tablets y celulares Android en Ciudad de la Costa. Diagnóstico gratis, presupuesto sin cargo y atención a domicilio en Neptunia, El Pinar, Salinas, Pinamar y Solymar.",
-      "areaServed": [
-        {"@type": "City", "name": "Ciudad de la Costa"},
-        {"@type": "City", "name": "Neptunia"},
-        {"@type": "City", "name": "El Pinar"},
-        {"@type": "City", "name": "Salinas"},
-        {"@type": "City", "name": "Pinamar"},
-        {"@type": "City", "name": "Solymar"}
-      ],
+      "@type": "Service",
+      "serviceType": "Soporte y Reparación de Computadoras",
+      "name": "Ale, Técnico de PC y Notebook con 20+ Años de Experiencia",
+      "description": "Servicio de reparación de PC, notebooks, optimización de red (WiFi) y soporte de dispositivos Smart. Atención a domicilio con enfoque en la confianza y soluciones duraderas.",
+      "areaServed": {
+        "@type": "State",
+        "name": "Uruguay"
+      },
       "provider": {
         "@type": "Person",
         "name": "Alejandro (Ale)"
@@ -164,14 +161,10 @@
             overflow: hidden; 
             box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .console-text {
             color: var(--color-accent); font-family: var(--font-code);
             font-size: 1em; white-space: pre-wrap;
-            text-align: center;
         }
 
         /* ========================================= */
@@ -252,54 +245,6 @@
         }
 
         /* ========================================= */
-        /* === MENÚ HAMBURGUESA === */
-        /* ========================================= */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-            background: none;
-            border: none;
-            z-index: 200;
-        }
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background: var(--color-accent);
-            transition: all 0.3s ease;
-        }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.97);
-            z-index: 150;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-        }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a {
-            font-family: var(--font-display);
-            font-size: 2em;
-            font-weight: 900;
-            color: var(--color-text);
-            letter-spacing: 2px;
-            transition: color 0.2s;
-        }
-        .mobile-menu a:hover { color: var(--color-accent); }
-        .mobile-menu a.contact-link { color: var(--color-secondary); }
-
-        /* ========================================= */
         /* === 4. ANIMACIONES Y RESPONSIVIDAD === */
         /* ========================================= */
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
@@ -344,10 +289,14 @@
 
         /* Tabletas Pequeñas / Móviles Grandes (Max 768px) */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            nav .container { justify-content: space-between; padding: 15px 20px !important; }
-
+            /* Navigation: Hide links */
+            .nav-links { 
+                display: none; 
+            }
+            nav .container {
+                justify-content: center; 
+            }
+            
             /* Service Grid: Force single column stack */
             .service-grid {
                 grid-template-columns: 1fr; 
@@ -392,25 +341,14 @@
 
     <nav>
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 40px;">
-            <div class="logo" style="font-family: var(--font-display); font-size: 1.8em; font-weight: 900;">CONTRA<span style="color: var(--color-accent);">LAMAQUINA</span></div>
+            <div class="logo" style="font-family: var(--font-display); font-size: 1.8em; font-weight: 900;">PC <span style="color: var(--color-accent);">EXPRESS</span></div>
             <ul class="nav-links" style="list-style: none; display: flex; gap: 30px;">
                 <li><a href="#servicios" style="opacity: 0.7;">SERVICIOS</a></li>
-                <li><a href="#diseno" style="opacity: 0.7;">DISEÑO WEB</a></li>
                 <li><a href="#proyectos" style="opacity: 0.7;">SOLUCIONES</a></li>
                 <li><a href="#contacto" style="color: var(--color-secondary); font-weight: 700;">CONTACTO</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
-                <span></span><span></span><span></span>
-            </button>
         </div>
     </nav>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#servicios" onclick="closeMobileMenu()">SERVICIOS</a>
-        <a href="#diseno" onclick="closeMobileMenu()">DISEÑO WEB</a>
-        <a href="#proyectos" onclick="closeMobileMenu()">SOLUCIONES</a>
-        <a href="#contacto" class="contact-link" onclick="closeMobileMenu()">CONTACTO</a>
-    </div>
 
     <section class="hero" id="home">
         <div class="container hero-layout">
@@ -420,15 +358,12 @@
 
             <div class="hero-content" style="padding-left: 60px;">
 
-                <h2 class="animate-on-scroll">Tu computadora vuelve a funcionar — <span style="color: var(--color-accent);">o no te cobramos.</span></h2>
+                <h2 class="animate-on-scroll">¡Hola! Soy Ale, Tu Técnico de PC con Más de 20 Años de <span style="color: var(--color-accent);">Experiencia</span>.</h2>
                 
-                <p class="animate-on-scroll" style="transition-delay: 0.2s; font-size: 1.1em; margin-bottom: 20px; opacity: 0.85;">
-                  Soy Ale, técnico a domicilio en <span style="color: var(--color-accent);">Ciudad de la Costa</span> — Neptunia, El Pinar, Salinas, Pinamar y Solymar.<br><br>
-                  ✅ Diagnóstico gratis &nbsp;·&nbsp; ✅ Presupuesto sin cargo &nbsp;·&nbsp; ✅ Atención a domicilio sin costo
-                </p>
+                <p class="animate-on-scroll" style="transition-delay: 0.2s;">
                 
                 <a href="#contacto" class="cta-button animate-on-scroll" style="transition-delay: 0.4s;">
-                    ESCRIBILE A ALE POR WHATSAPP >>
+                    ¡HABLEMOS! SOLICITAR ASISTENCIA DIRECTA
                 </a>
             </div>
         </div>
@@ -436,96 +371,67 @@
     
     <section class="section" id="servicios">
         <div class="container">
-            <h2 class="animate-on-scroll">Servicios: <span style="color: var(--color-accent);">¿Qué problema te resolvemos?</span></h2>
+            <h2 class="animate-on-scroll">Servicios:  <span style="color: var(--color-accent);">Reparación de PC y Notebooks</span></h2>
             <div class="service-grid">
                 <div class="service-card animate-on-scroll">
-                    <h3><span class="icon">🖥️</span> Computadoras lentas o con virus</h3>
-                    <p>Limpieza, optimización y eliminación de malware. Tu máquina como nueva, sin comprar nada nuevo.</p>
+                    <h3><span class="icon">💻</span> Diagnóstico y Reparación de Hardware/Software</h3>
+                    <p>Devuelvo la vida a tu equipo, realizando mantenimiento profundo y soluciones a fallas críticas en tu PC o Notebook para que funcione como el primer día.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.1s;">
-                    <h3><span class="icon">📁</span> Recuperación de datos perdidos</h3>
-                    <p>Fotos, documentos, archivos borrados. Los recuperamos antes de declarar pérdida total. No cobramos si no podemos recuperar nada.</p>
+                    <h3><span class="icon">📡</span> Ayuda Remota con Programas y Sistemas Operativos</h3>
+                    <p>Gestión completa de software. **Instalo, desinstalo y arreglo** cualquier programa, suite ofimática o aplicación que te esté dando problemas, sin que salgas de tu casa. Soluciones inmediatas.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.2s;">
-                    <h3><span class="icon">📱</span> Tablets y celulares Android</h3>
-                    <p>Reparación de software, actualizaciones, problemas de rendimiento. Sin moverte de tu casa.</p>
+                    <h3><span class="icon">🔗</span> Soporte para tu Casa Inteligente y Periféricos</h3>
+                    <p>Te ayudo a configurar tu WiFi, asistentes de voz (Alexa, Google) y todos tus dispositivos Smart para que se integren y funcionen perfectamente en tu hogar.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
-                    <h3><span class="icon">🔧</span> Mantenimiento preventivo</h3>
-                    <p>Revisión completa antes de que algo falle. Más barato que esperar el problema. WiFi, red, periféricos incluidos.</p>
+                    <h3><span class="icon">📶</span> Optimización y Aumento de Señal WiFi</h3>
+                    <p>Configuro y optimizo tu router y tu red para asegurar que la señal de Internet sea fuerte y estable en cada rincón de tu casa u oficina.</p>
+</div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <h3><span class="icon">🎯</span> CONSULTORÍA Y ASESORAMIENTO</h3>
+                    <p>Si tienes un inconveniente con la tecnología, consultas sobre la inteligencia artificial o cualquier duda puedes incluírla en el formulario al final del sitio que te responderé a la brevedad. </p>
+</div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <h3><span class="icon">💡</span> Creación de Sitios Web</h3>
+                    <p>Convierte tu idea o tu negocio en una pagina web de aterrizaje. Con costos incomparablemente accesibles. No dejes pasar esta oportunidad. </p>
+
+
                 </div>
-                <div class="service-card animate-on-scroll" style="transition-delay: 0.4s;">
-                    <h3><span class="icon">🎯</span> Asesoramiento informático</h3>
-                    <p>Dudas sobre tecnología, inteligencia artificial, qué equipo comprar o cómo usar mejor lo que tenés. Consulta sin cargo.</p>
-                </div>
-                <div class="service-card animate-on-scroll" style="transition-delay: 0.5s;">
-                    <h3><span class="icon">🌐</span> Diseño web y gráfico</h3>
-                    <p>Sitios web, aplicaciones y diseño gráfico para emprendedores y pequeños negocios de la Costa. Precios accesibles.</p>
-                </div>
+
             </div>
         </div>
     </section>
 
     <section class="section" id="proyectos">
         <div class="container">
-            <h2 class="animate-on-scroll">Por qué elegir <span style="color: var(--color-accent);">Contralamaquina</span></h2>
+            <h2 class="animate-on-scroll">Soluciones: <span style="color: var(--color-accent);">Reparación, Upgrades y Recuperación de Datos</span></h2>
             <div class="service-grid" style="gap: 20px;">
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">🚀</span> Potenciá tu equipo (Upgrades)</h3>
-                    <p>RAM, discos SSD, limpieza de hardware. Dale la potencia extra que necesita sin comprar una máquina nueva. Máximo rendimiento garantizado.</p>
+                    <h3><span class="icon">🚀</span> Potenciar tu PC (Upgrades de Hardware)</h3>
+                    <p>Le doy la potencia extra que necesita tu equipo, instalando RAM o discos SSD para que no tengas que comprar una máquina nueva. Máximo rendimiento garantizado.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">🔄</span> Cambio de Windows sin perder archivos</h3>
-                    <p>Transición segura entre sistemas operativos o versiones. Todos tus archivos y configuraciones permanecen intactos.</p>
+                    <h3><span class="icon">🔄</span> Cambio de Windows o Mac sin Perder Archivos</h3>
+                    <p>Hago la transición segura entre sistemas operativos o versiones, asegurando que todos tus archivos y configuraciones permanezcan intactos.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">📍</span> Técnico local en Ciudad de la Costa</h3>
-                    <p>Atiendo en Neptunia, El Pinar, Salinas, Pinamar y Solymar. Conocés a quién le abrís la puerta. Hablás siempre directo con Ale.</p>
+                    <h3><span class="icon">🔬</span> Rescato tus Archivos (Servicio de Data Recovery)</h3>
+                    <p>Si tu disco duro falló, tengo protocolos de emergencia para intentar recuperar tus fotos, videos, trabajos y documentos más importantes.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="diseno" style="background-color: #050505;">
-        <div class="container">
-            <h2 class="animate-on-scroll">También hacemos <span style="color: var(--color-accent);">Diseño Web y Gráfico</span></h2>
-            <p class="animate-on-scroll" style="text-align:center; max-width: 700px; margin: -50px auto 60px; opacity: 0.8; font-size: 1.05em;">
-                Si tenés un negocio o emprendimiento en la Costa y querés presencia online o material de diseño, somos la solución más accesible de la zona.
-            </p>
-            <div class="service-grid" style="gap: 30px;">
-                <div class="service-card animate-on-scroll" style="border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0,255,255,0.15);">
-                    <h3><span>🌐</span> Sitios Web Profesionales</h3>
-                    <p style="margin-bottom: 15px;">Página web para tu negocio, emprendimiento o servicio. Diseño moderno, adaptado a celular, con botón de WhatsApp directo y optimizado para que te encuentren en Google.</p>
-                    <p style="color: var(--color-accent); font-weight: 700;">→ Desde una landing page hasta un sitio completo</p>
-                </div>
-                <div class="service-card animate-on-scroll" style="transition-delay: 0.15s; border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0,255,255,0.15);">
-                    <h3><span>🎨</span> Diseño Gráfico</h3>
-                    <p style="margin-bottom: 15px;">Logos, flyers, carteles, menús, tarjetas personales y material para redes sociales. Diseño profesional con identidad propia para tu marca o negocio.</p>
-                    <p style="color: var(--color-accent); font-weight: 700;">→ Entrega digital lista para imprimir o publicar</p>
-                </div>
-                <div class="service-card animate-on-scroll" style="transition-delay: 0.3s; border-color: var(--color-secondary); box-shadow: 0 0 20px rgba(255,0,255,0.15);">
-                    <h3><span>📱</span> Presencia en Redes Sociales</h3>
-                    <p style="margin-bottom: 15px;">Armamos tu perfil de Instagram, Facebook y Google Business desde cero, con textos, imágenes y todo optimizado para que tus clientes te encuentren.</p>
-                    <p style="color: var(--color-secondary); font-weight: 700;">→ Kit completo de presencia digital</p>
-                </div>
-            </div>
-            <div class="animate-on-scroll" style="text-align:center; margin-top: 50px;">
-                <a href="#contacto" class="cta-button" style="font-size: 1.2em; box-shadow: 4px 4px 0 var(--color-secondary);">
-                    CONSULTÁ PRECIO SIN COMPROMISO >>
-                </a>
             </div>
         </div>
     </section>
 
     <section class="section" id="contacto" style="padding-bottom: 100px;">
         <div class="container" style="max-width: 800px; text-align: center;">
-            <h2 class="animate-on-scroll">¿Tenés un problema? <span style="color: var(--color-accent);">Escribile a Ale</span></h2>
+            <h2 class="animate-on-scroll">Hablemos Directo (¡Mándame un <span style="color: var(--color-accent);">WhatsApp</span>!)</h2>
             
             <div class="form-container animate-on-scroll">
-                <p style="color: #aaa; margin-bottom: 20px; font-size: 0.95em;">Completá el formulario y te respondo a la brevedad por WhatsApp. El diagnóstico es siempre gratis.</p>
-                <input type="text" id="inputName" placeholder="TU NOMBRE" required>
-                <input type="email" id="inputEmail" placeholder="EMAIL (OPCIONAL)">
-                <textarea id="inputQuery" placeholder="DESCRIBÍ EL PROBLEMA — ¿Qué equipo tenés? ¿Qué le pasa? ¿En qué zona de la Costa estás?" rows="4" required></textarea>
+                <input type="text" id="inputName" placeholder="NOMBRE COMPLETO" required>
+                <input type="email" id="inputEmail" placeholder="EMAIL DE CONTACTO (Opcional)">
+                <textarea id="inputQuery" placeholder="DESCRIBE TU PROBLEMA O REQUERIMIENTO (Sé lo más específico posible)" rows="4" required></textarea>
                 
                 <button type="button" class="cta-button" id="whatsapp-button" style="width: 100%; font-size: 1.5em; border: 2px solid var(--color-accent); box-shadow: 4px 4px 0 var(--color-secondary);">
                     ENVIAR MENSAJE POR WHATSAPP >>
@@ -536,11 +442,11 @@
 
     <footer style="padding: 30px 0; border-top: 1px solid var(--color-border); text-align: center;">
         <div class="container">
-            <p style="font-size: 0.8em; font-family: var(--font-code);">&copy; 2025 Contralamaquina — Ale, técnico en Ciudad de la Costa. Todos los derechos reservados.</p>
+            <p style="font-size: 0.8em; font-family: var(--font-code);">&copy; 2025 Ale - Tu Técnico de Confianza. TODOS LOS DERECHOS RESERVADOS.</p>
         </div>
     </footer>
     
-    <a href="https://api.whatsapp.com/send?phone=59894691690&text=Hola%20Ale!%20Te%20contacto%20desde%20tu%20web%20Contralamaquina.%20Necesito%20ayuda%20con%20mi%20computadora." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <a href="https://api.whatsapp.com/send?phone=59894691690&text=Hola%20Ale,%20necesito%20soporte%20t%C3%A9cnico%20urgente.%20%C2%BFMe%20puedes%20ayudar?" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -614,33 +520,22 @@
             const memoryTotal = (Math.random() * (32 - 8) + 8).toFixed(0); 
             const latency = (Math.random() * (50 - 10) + 10).toFixed(0); 
 
+            // MENSAJE AMIGABLE EN LA CONSOLA
             return `
-> INICIANDO CONTRALAMAQUINA...
-> TÉCNICO A DOMICILIO EN CIUDAD DE LA COSTA
-> NEPTUNIA · EL PINAR · SALINAS · PINAMAR · SOLYMAR
->
-> ✅ DIAGNÓSTICO: GRATIS
-> ✅ PRESUPUESTO: SIN CARGO
-> ✅ VISITA A DOMICILIO: SIN COSTO
-> ✅ GARANTÍA: EN CADA TRABAJO
->
-> SERVICIOS DISPONIBLES:
-> [01] REPARACIÓN DE COMPUTADORAS Y NOTEBOOKS
-> [02] RECUPERACIÓN DE DATOS PERDIDOS
-> [03] ELIMINACIÓN DE VIRUS Y MALWARE
-> [04] DISEÑO WEB Y APLICACIONES
-> [05] DISEÑO GRÁFICO — LOGOS Y FLYERS
-> [06] PRESENCIA DIGITAL PARA TU NEGOCIO
->
-> ESCANEANDO TU SISTEMA...
+> BOOTING "ALE'S SUPPORT ASSISTANT"...
+> COMO EXPERTO EN EL RUBRO, TE OFREZCO SOLUCIONES REALES, DURADERAS Y DE CONFIANZA PARA TU PC, NOTEBOOK Y DISPOSITIVOS SMART. 
+> OLVIDATE DE LOS DOLORES DE CABEZA TÉCNICOS.
+> COMUNICATE HOY MISMO PARA RESOLVERLO TODO.
+> SCANNING CLIENT SYSTEM [LOCAL_ACCESS]...
 > CLIENT_BROWSER: ${browser}
 > CLIENT_RESOLUTION: ${screenRes}
-> CPU_LOAD_AVG: ${cpuLoad}%
-> MEMORY_USAGE: ${memoryUsage}GB / ${memoryTotal}GB
-> LATENCIA: ${latency}ms
 >
-> CONECTANDO CON ALE...
-> 📞 094 691 690
+> --- DIAGNOSTIC REPORT START ---
+> CPU_LOAD_AVG: ${cpuLoad}%
+> MEMORY_USAGE: ${memoryUsage}GB / ${memoryTotal}GB (NOMINAL)
+> PING_LATENCY: ${latency}ms (OPTIMAL)
+>
+> CONTACTING ALE FOR SOLUTION...
 > INPUT: _
             `;
         }
@@ -717,22 +612,6 @@ ${query.trim()}
             // Abrir WhatsApp en una nueva pestaña
             window.open(whatsappURL, '_blank');
         });
-
-        // === 5. MENÚ HAMBURGUESA ===
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-        });
-
-        function closeMobileMenu() {
-            hamburger.classList.remove('open');
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = '';
-        }
     </script>
 </body>
 </html>
