@@ -41,11 +41,17 @@
         /* === 1. VARIABLES & BASE STYLES (UI/CONSOLA) === */
         /* ========================================= */
         :root {
-            --color-bg: #000000;
-            --color-text: #F0F0F0;
-            --color-accent: #00FFFF; /* Cian Puro y Frío */
-            --color-secondary: #FF00FF; /* Magenta (Para elementos de alerta/acción) */
-            --color-border: #151515;
+            --color-bg: #060816;
+            --color-bg-soft: #0d1428;
+            --color-surface: rgba(255, 255, 255, 0.05);
+            --color-text: #f4f7ff;
+            --color-muted: #8ea0bd;
+            --color-accent: #57e5ff;
+            --color-accent-2: #8b5cff;
+            --color-secondary: #ff6eb6;
+            --color-border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            --radius: 22px;
             --font-display: 'Inter', sans-serif;
             --font-code: 'Roboto Mono', monospace;
         }
@@ -55,47 +61,58 @@
         
         body {
             font-family: var(--font-code);
-            background-color: var(--color-bg);
+            background:
+                radial-gradient(circle at top left, rgba(87, 229, 255, 0.16), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(255, 110, 182, 0.16), transparent 30%),
+                linear-gradient(135deg, var(--color-bg) 0%, #080d1d 100%);
             color: var(--color-text);
-            line-height: 1.6;
+            line-height: 1.65;
             overflow-x: hidden;
             scroll-behavior: smooth;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 36px 36px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            pointer-events: none;
+            z-index: 0;
         }
         .container { 
             max-width: 1400px; 
             margin: 0 auto; 
             padding: 0 40px; 
+            position: relative;
+            z-index: 2;
         }
         
-        /* TIPOGRAFÍA IMPACTANTE (AJUSTADA PARA PROLIJIDAD) */
         h1 { 
             font-family: var(--font-display); 
-            /* Min: 2.2rem, Fluid: 7vw, Max: 6rem */
             font-size: clamp(2.2rem, 7vw, 6rem); 
             font-weight: 900; 
-            line-height: 1.05; 
-            /* Menos agresivo que antes */
+            line-height: 1.03; 
             letter-spacing: clamp(-2px, -0.5vw, -3px); 
             margin-bottom: 25px; 
         }
         h2 { 
             font-family: var(--font-display); 
-            /* Min: 2rem, Fluid: 5vw, Max: 3.2rem */
             font-size: clamp(2rem, 5vw, 3.2rem); 
             font-weight: 900; 
             text-align: center; 
-            /* Margen más equilibrado */
-            margin-bottom: 80px; 
+            margin-bottom: 70px; 
             line-height: 1.1; 
         }
         h3 { 
             font-family: var(--font-code); 
-            font-size: 1.5em; 
+            font-size: 1.1rem; 
             font-weight: 700; 
             letter-spacing: 1px; 
             text-transform: uppercase; 
+            margin-bottom: 12px;
         }
-        p { font-family: var(--font-code); font-weight: 300; }
+        p { font-family: var(--font-code); font-weight: 300; color: var(--color-muted); }
 
         /* ========================================= */
         /* === 2. FONDO Y NAVEGACIÓN === */
@@ -110,13 +127,17 @@
         
         nav {
             position: fixed; top: 0; width: 100%; 
-            background: rgba(0, 0, 0, 0.9); 
+            background: rgba(6, 8, 22, 0.78); 
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--color-border); 
             z-index: 100;
         }
+        .nav-links a {
+            opacity: 0.8;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
         .nav-links a:hover { color: var(--color-accent); opacity: 1 !important; }
 
-        /* HERO SECTION (Padding ajustado) */
         .hero { 
             position: relative; 
             padding: 200px 0 120px; 
@@ -124,54 +145,213 @@
         }
         .hero-layout {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            align-items: start;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 50px;
             position: relative;
             z-index: 2;
         }
-
-        /* CTA BUTTON (Padding y font ajustados) */
+        .hero-content {
+            padding: 32px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(87, 229, 255, 0.12);
+            border: 1px solid rgba(87, 229, 255, 0.24);
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .hero-content h2 {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .hero-content p {
+            margin-bottom: 22px;
+            font-size: 1rem;
+        }
+        .hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .hero-pills span {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--color-border);
+            font-size: 0.82rem;
+            color: var(--color-text);
+        }
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .hero-stats .stat {
+            padding: 14px;
+            border-radius: 16px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+        .hero-stats strong {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            margin-bottom: 2px;
+        }
         .cta-button {
             display: inline-block;
-            background-color: var(--color-accent);
-            color: var(--color-bg);
-            /* Tamaño más limpio */
-            font-size: 1.5em; 
+            background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+            color: #050816;
+            font-size: 1.2rem;
             font-weight: 700;
-            /* Padding estandarizado */
-            padding: 20px 40px; 
-            border: 2px solid var(--color-accent);
-            border-radius: 0;
-            transition: all 0.1s ease;
-            box-shadow: 4px 4px 0 var(--color-secondary);
+            padding: 16px 28px; 
+            border: 0;
+            border-radius: 999px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 30px rgba(87, 229, 255, 0.2);
             cursor: pointer;
         }
         .cta-button:hover {
-            background-color: var(--color-secondary);
-            color: var(--color-text);
-            border-color: var(--color-secondary);
-            box-shadow: 6px 6px 0 var(--color-accent);
-            transform: translate(-3px, -3px); 
+            transform: translateY(-2px);
+            box-shadow: 0 16px 35px rgba(255, 110, 182, 0.24);
         }
 
-        /* IMAGEN - SIMULACIÓN DE CONSOLA */
         .image-functional {
             width: 100%; 
-            height: 500px; 
-            background-color: #0A0A0A;
-            border: 1px solid var(--color-accent); 
-            padding: 20px;
+            height: 540px; 
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25));
+            border: 1px solid rgba(87, 229, 255, 0.24); 
+            border-radius: var(--radius);
+            padding: 0;
             overflow: hidden; 
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+            box-shadow: var(--shadow);
             position: relative;
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
         }
+        .terminal-window {
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 8, 23, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 0 1px rgba(87, 229, 255, 0.12), 0 0 0 1px rgba(255,255,255,0.04), 0 25px 80px rgba(0,0,0,0.55);
+            position: relative;
+        }
+        .terminal-window::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(87, 229, 255, 0.16), transparent 32%), radial-gradient(circle at bottom right, rgba(255, 110, 182, 0.12), transparent 28%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .terminal-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            z-index: 1;
+        }
+        .toolbar-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .toolbar-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px rgba(0,0,0,0.25);
+        }
+        .toolbar-dots .dot.red { background: #ff6b6b; }
+        .toolbar-dots .dot.yellow { background: #ffd166; }
+        .toolbar-dots .dot.green { background: #4cd964; }
+        .terminal-title {
+            color: #9eb3d5;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+        }
+        .terminal-body {
+            padding: 18px 20px 22px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .terminal-body::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 0%, rgba(87, 229, 255, 0.04) 50%, transparent 100%);
+            pointer-events: none;
+            animation: scanline 7s linear infinite;
+        }
+        .terminal-status {
+            color: var(--color-accent);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .terminal-status::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            box-shadow: 0 0 10px var(--color-accent);
+        }
         .console-text {
-            color: var(--color-accent); font-family: var(--font-code);
-            font-size: 1em; white-space: pre-wrap;
-            text-align: center;
+            color: #7cf6d7;
+            font-family: var(--font-code);
+            font-size: 0.95em;
+            white-space: pre-wrap;
+            text-align: left;
+            line-height: 1.75;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 12px rgba(124, 246, 215, 0.2);
+        }
+        .console-text::after {
+            content: "▍";
+            animation: blink 1s step-end infinite;
+            color: var(--color-accent);
+            margin-left: 4px;
+        }
+        @keyframes scanline {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100%); }
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
         }
 
         /* ========================================= */
@@ -204,49 +384,72 @@
         /* ========================================= */
         /* === 3. SECCIONES Y COMPONENTES === */
         /* ========================================= */
-        /* Padding de sección estandarizado */
         .section { 
-            padding: 120px 0; 
-            background-color: var(--color-bg); 
+            padding: 110px 0; 
+            background: transparent; 
         }
-        .section:nth-child(even) { background-color: #0A0A0A; }
+        .section:nth-child(even) { background: rgba(255,255,255,0.025); }
         .section h2 span { color: var(--color-accent); }
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 24px;
         }
         .service-card {
-            padding: 30px; border: 1px solid var(--color-border);
-            background-color: #0A0A0A; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 28px; 
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
-        .service-card:hover { border-color: var(--color-accent); box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
+        .service-card:hover { 
+            transform: translateY(-4px); 
+            border-color: rgba(87, 229, 255, 0.45); 
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.28); 
+        }
+        .service-card .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 14px;
+            border-radius: 50%;
+            background: rgba(87, 229, 255, 0.12);
+            color: var(--color-accent);
+        }
 
-        /* FORMULARIO */
         .form-container { 
             max-width: 800px; 
             margin: 0 auto; 
-            background-color: #050505; 
-            padding: 40px; 
-            border: 3px solid var(--color-secondary); 
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3); 
+            background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+            padding: 38px; 
+            border: 1px solid rgba(255, 110, 182, 0.24); 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow);
         }
         .form-container input, .form-container textarea {
             border: 1px solid var(--color-border);
-            background-color: var(--color-bg); 
+            background: rgba(6, 8, 22, 0.9); 
             color: var(--color-text); 
             padding: 15px; 
             margin-bottom: 15px; 
             font-family: var(--font-code);
             width: 100%;
+            border-radius: 14px;
+        }
+        .form-container input:focus, .form-container textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(87, 229, 255, 0.15);
         }
 
-        /* FOOTER CORREGIDO */
         footer p {
-            /* COLOR CORREGIDO para legibilidad */
-            color: #999; 
+            color: #9ca8bf; 
             font-size: 0.8em; 
             font-family: var(--font-code);
         }
@@ -276,28 +479,71 @@
         .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         .mobile-menu {
-            display: none;
+            display: flex;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.97);
+            background: rgba(3, 7, 18, 0.82);
+            backdrop-filter: blur(18px);
             z-index: 150;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 40px;
+            gap: 18px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
         }
-        .mobile-menu.open { display: flex; }
+        .mobile-menu.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .mobile-menu-card {
+            width: min(92vw, 420px);
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .mobile-menu-card .menu-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 8px;
+        }
         .mobile-menu a {
             font-family: var(--font-display);
-            font-size: 2em;
-            font-weight: 900;
+            font-size: 1.35rem;
+            font-weight: 800;
             color: var(--color-text);
-            letter-spacing: 2px;
-            transition: color 0.2s;
+            letter-spacing: 1px;
+            transition: color 0.2s, transform 0.2s;
+            padding: 8px 0;
         }
-        .mobile-menu a:hover { color: var(--color-accent); }
+        .mobile-menu a:hover {
+            color: var(--color-accent);
+            transform: translateX(4px);
+        }
         .mobile-menu a.contact-link { color: var(--color-secondary); }
+        .mobile-menu .menu-close {
+            align-self: flex-end;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--color-text);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
         /* ========================================= */
         /* === 4. ANIMACIONES Y RESPONSIVIDAD === */
@@ -305,61 +551,52 @@
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .animated { opacity: 1; transform: translateY(0); }
 
-        /* Tabletas Grandes / Escritorios Pequeños (Max 1000px) */
         @media (max-width: 1000px) {
             .container { padding: 0 20px; }
-            
-            /* Hero Layout: Stack columns */
             .hero-layout { 
                 grid-template-columns: 1fr; 
-                gap: 50px; 
+                gap: 40px; 
             }
             .hero-content { 
-                padding-left: 0; 
+                padding: 26px; 
                 text-align: center; 
             }
-            
-            /* Console Image */
+            .hero-content h2 {
+                text-align: center;
+            }
             .image-functional { 
-                height: 350px; 
+                height: 380px; 
                 order: -1; 
-                max-width: 600px;
+                max-width: 700px;
                 margin: 0 auto;
             }
-
-            /* CTA Button: Full width */
             .cta-button { 
                 width: 100%; 
-                margin-top: 30px; 
+                margin-top: 20px; 
+                text-align: center;
             }
-            
-            /* Sections: Reduced padding */
             .section { 
-                padding: 80px 0; 
+                padding: 90px 0; 
             }
             h2 { 
                 margin-bottom: 50px; 
             }
         }
 
-        /* Tabletas Pequeñas / Móviles Grandes (Max 768px) */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
             nav .container { justify-content: space-between; padding: 15px 20px !important; }
-
-            /* Service Grid: Force single column stack */
             .service-grid {
                 grid-template-columns: 1fr; 
-                gap: 30px;
+                gap: 20px;
             }
-
-            /* Form Padding */
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
             .form-container {
-                padding: 30px;
+                padding: 24px;
             }
-            
-            /* WHATSAPP FLOTANTE: Un poco más pequeño en móvil */
             .whatsapp-float {
                 width: 50px;
                 height: 50px;
@@ -370,19 +607,18 @@
             }
         }
 
-        /* Móviles Pequeños (Max 480px) */
         @media (max-width: 480px) {
             .container { padding: 0 15px; }
-            
-            .hero { padding: 180px 0 80px; } 
-            
-            /* Console Image: Even shorter for small viewports */
+            .hero { padding: 180px 0 70px; } 
             .image-functional { 
-                height: 200px; 
-                padding: 10px;
+                height: 240px; 
+                padding: 12px;
             }
             .console-text {
-                font-size: 0.9em;
+                font-size: 0.82em;
+            }
+            .hero-content {
+                padding: 20px;
             }
         }
     </style>
@@ -406,29 +642,55 @@
     </nav>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#servicios" onclick="closeMobileMenu()">SERVICIOS</a>
-        <a href="#diseno" onclick="closeMobileMenu()">DISEÑO WEB</a>
-        <a href="#proyectos" onclick="closeMobileMenu()">SOLUCIONES</a>
-        <a href="#contacto" class="contact-link" onclick="closeMobileMenu()">CONTACTO</a>
+        <div class="mobile-menu-card">
+            <button class="menu-close" id="menuClose" aria-label="Cerrar menú">×</button>
+            <div class="menu-label">Navegación</div>
+            <a href="#servicios" onclick="closeMobileMenu()">SERVICIOS</a>
+            <a href="#diseno" onclick="closeMobileMenu()">DISEÑO WEB</a>
+            <a href="#proyectos" onclick="closeMobileMenu()">SOLUCIONES</a>
+            <a href="#contacto" class="contact-link" onclick="closeMobileMenu()">CONTACTO</a>
+        </div>
     </div>
 
     <section class="hero" id="home">
         <div class="container hero-layout">
             <div class="image-functional animate-on-scroll">
-                <p class="console-text" id="consoleText"></p>
+                <div class="terminal-window">
+                    <div class="terminal-toolbar">
+                        <div class="toolbar-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="terminal-title">contralamaquina@ale:~</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-status">sistema de soporte en línea · diagnóstico gratis</div>
+                        <pre class="console-text" id="consoleText"></pre>
+                    </div>
+                </div>
             </div>
 
-            <div class="hero-content" style="padding-left: 60px;">
-
-                <h2 class="animate-on-scroll">Tu computadora vuelve a funcionar — <span style="color: var(--color-accent);">o no te cobramos.</span></h2>
+            <div class="hero-content animate-on-scroll" style="padding-left: 60px;">
+                <div class="hero-badge">Servicio técnico local • confianza real</div>
+                <h2>Tu equipo vuelve a funcionar con <span style="color: var(--color-accent);">soluciones claras.</span></h2>
                 
-                <p class="animate-on-scroll" style="transition-delay: 0.2s; font-size: 1.1em; margin-bottom: 20px; opacity: 0.85;">
-                  Soy Ale, técnico a domicilio en <span style="color: var(--color-accent);">Ciudad de la Costa</span> — Neptunia, El Pinar, Salinas, Pinamar y Solymar.<br><br>
-                  ✅ Diagnóstico gratis &nbsp;·&nbsp; ✅ Presupuesto sin cargo &nbsp;·&nbsp; ✅ Atención a domicilio sin costo
+                <p style="transition-delay: 0.2s; margin-bottom: 18px;">
+                  Soy Ale, tecnico de confianza en <span style="color: var(--color-accent);">Ciudad de la Costa</span> para Neptunia, El Pinar, Salinas, Pinamar y Solymar.
                 </p>
+                <div class="hero-pills">
+                    <span>Diagnóstico gratis</span>
+                    <span>Presupuesto sin cargo</span>
+                    <span>Atención a domicilio</span>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat"><strong>20+</strong><span>Años</span></div>
+                    <div class="stat"><strong>100%</strong><span>Sin vueltas</span></div>
+                    <div class="stat"><strong>24h</strong><span>Respuesta</span></div>
+                </div>
                 
-                <a href="#contacto" class="cta-button animate-on-scroll" style="transition-delay: 0.4s;">
-                    ESCRIBILE A ALE POR WHATSAPP >>
+                <a href="#contacto" class="cta-button" style="transition-delay: 0.4s; margin-top: 22px;">
+                    HABLÁ CON ALE POR WHATSAPP
                 </a>
             </div>
         </div>
@@ -436,7 +698,7 @@
     
     <section class="section" id="servicios">
         <div class="container">
-            <h2 class="animate-on-scroll">Servicios: <span style="color: var(--color-accent);">¿Qué problema te resolvemos?</span></h2>
+            <h2 class="animate-on-scroll">Servicios pensados para <span style="color: var(--color-accent);">resolverte la vida diaria.</span></h2>
             <div class="service-grid">
                 <div class="service-card animate-on-scroll">
                     <h3><span class="icon">🖥️</span> Computadoras lentas o con virus</h3>
@@ -489,8 +751,8 @@
     <section class="section" id="diseno" style="background-color: #050505;">
         <div class="container">
             <h2 class="animate-on-scroll">También hacemos <span style="color: var(--color-accent);">Diseño Web y Gráfico</span></h2>
-            <p class="animate-on-scroll" style="text-align:center; max-width: 700px; margin: -50px auto 60px; opacity: 0.8; font-size: 1.05em;">
-                Si tenés un negocio o emprendimiento en la Costa y querés presencia online o material de diseño, somos la solución más accesible de la zona.
+            <p class="animate-on-scroll" style="text-align:center; max-width: 760px; margin: -50px auto 60px; font-size: 1.02em;">
+                Si tenés un negocio o emprendimiento en la Costa y querés una imagen más sólida y una presencia online que realmente funcione, te ayudamos con soluciones simples y profesionales.
             </p>
             <div class="service-grid" style="gap: 30px;">
                 <div class="service-card animate-on-scroll" style="border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0,255,255,0.15);">
@@ -615,33 +877,32 @@
             const latency = (Math.random() * (50 - 10) + 10).toFixed(0); 
 
             return `
-> INICIANDO CONTRALAMAQUINA...
-> TÉCNICO A DOMICILIO EN CIUDAD DE LA COSTA
-> NEPTUNIA · EL PINAR · SALINAS · PINAMAR · SOLYMAR
->
-> ✅ DIAGNÓSTICO: GRATIS
-> ✅ PRESUPUESTO: SIN CARGO
-> ✅ VISITA A DOMICILIO: SIN COSTO
-> ✅ GARANTÍA: EN CADA TRABAJO
->
-> SERVICIOS DISPONIBLES:
-> [01] REPARACIÓN DE COMPUTADORAS Y NOTEBOOKS
-> [02] RECUPERACIÓN DE DATOS PERDIDOS
-> [03] ELIMINACIÓN DE VIRUS Y MALWARE
-> [04] DISEÑO WEB Y APLICACIONES
-> [05] DISEÑO GRÁFICO — LOGOS Y FLYERS
-> [06] PRESENCIA DIGITAL PARA TU NEGOCIO
->
-> ESCANEANDO TU SISTEMA...
-> CLIENT_BROWSER: ${browser}
-> CLIENT_RESOLUTION: ${screenRes}
-> CPU_LOAD_AVG: ${cpuLoad}%
-> MEMORY_USAGE: ${memoryUsage}GB / ${memoryTotal}GB
-> LATENCIA: ${latency}ms
->
-> CONECTANDO CON ALE...
-> 📞 094 691 690
-> INPUT: _
+[CONTRALAMAQUINA] inicializando entorno...
+[SOporte local] técnico a domicilio en Ciudad de la Costa
+[Zonas] Neptunia · El Pinar · Salinas · Pinamar · Solymar
+
+[OK] diagnóstico: gratis
+[OK] presupuesto: sin cargo
+[OK] visita a domicilio: sin costo
+[OK] garantía: en cada trabajo
+
+[Servicios activos]
+[01] reparación de PC y notebooks
+[02] recuperación de datos perdidos
+[03] eliminación de virus y malware
+[04] diseño web y aplicaciones
+[05] diseño gráfico y presencia digital
+
+[Escaneo de sistema]
+Browser: ${browser}
+Resolución: ${screenRes}
+CPU: ${cpuLoad}%
+Memoria: ${memoryUsage}GB / ${memoryTotal}GB
+Latencia: ${latency}ms
+
+[Conectando con Ale]
+Tel: 094 691 690
+Prompt: _
             `;
         }
 
@@ -649,17 +910,16 @@
 
         function typeWriterLoop() {
             if (charIndex < currentText.length) {
-                consoleTextElement.innerHTML += currentText.charAt(charIndex);
+                consoleTextElement.textContent += currentText.charAt(charIndex);
                 charIndex++;
-                setTimeout(typeWriterLoop, 40);
+                setTimeout(typeWriterLoop, 18);
             } else {
-                // Escritura terminada: Esperar, generar nuevos datos y reiniciar
                 setTimeout(() => {
-                    consoleTextElement.innerHTML = '';
+                    consoleTextElement.textContent = '';
                     charIndex = 0;
-                    currentText = generateConsoleText(); // Genera nuevos datos en cada loop
+                    currentText = generateConsoleText();
                     typeWriterLoop();
-                }, 5000); // Espera 5 segundos antes de reiniciar
+                }, 4500);
             }
         }
         
@@ -721,18 +981,33 @@ ${query.trim()}
         // === 5. MENÚ HAMBURGUESA ===
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
+        const menuClose = document.getElementById('menuClose');
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-        });
+        function openMobileMenu() {
+            hamburger.classList.add('open');
+            mobileMenu.classList.add('open');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
 
         function closeMobileMenu() {
             hamburger.classList.remove('open');
             mobileMenu.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.contains('open');
+            isOpen ? closeMobileMenu() : openMobileMenu();
+        });
+
+        menuClose.addEventListener('click', closeMobileMenu);
+        mobileMenu.addEventListener('click', (event) => {
+            if (event.target === mobileMenu) {
+                closeMobileMenu();
+            }
+        });
     </script>
 </body>
 </html>
