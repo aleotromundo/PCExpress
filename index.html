@@ -163,6 +163,12 @@
             border-bottom: 1px solid var(--color-border); 
             z-index: 100;
         }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
         .nav-links a {
             opacity: 0.8;
             transition: color 0.2s ease, opacity 0.2s ease;
@@ -582,7 +588,7 @@
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .animated { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
             nav .container { justify-content: space-between; padding: 15px 20px !important; }
@@ -665,7 +671,7 @@
     <nav>
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 40px;">
             <div class="logo" style="font-family: var(--font-display); font-size: 1.8em; font-weight: 900;">CONTRA<span style="color: var(--color-accent);">LAMAQUINA</span></div>
-            <ul class="nav-links" style="list-style: none; display: flex; gap: 30px;">
+            <ul class="nav-links">
                 <li><a href="#servicios" style="opacity: 0.7;">SERVICIOS</a></li>
                 <li><a href="#diseno" style="opacity: 0.7;">DISEÑO WEB</a></li>
                 <li><a href="#proyectos" style="opacity: 0.7;">SOLUCIONES</a></li>
