@@ -69,6 +69,7 @@
             line-height: 1.65;
             overflow-x: hidden;
             scroll-behavior: smooth;
+            cursor: none;
         }
         body::before {
             content: "";
@@ -86,6 +87,36 @@
             padding: 0 40px; 
             position: relative;
             z-index: 2;
+        }
+        .cursor-glow,
+        .cursor-core {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+        .cursor-glow {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(87, 229, 255, 0.24) 0%, rgba(87, 229, 255, 0.06) 35%, transparent 70%);
+            filter: blur(10px);
+            transition: width 0.18s ease, height 0.18s ease;
+        }
+        .cursor-core {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+            box-shadow: 0 0 18px rgba(87, 229, 255, 0.8), 0 0 34px rgba(255, 110, 182, 0.45);
+        }
+        .cursor-glow.active {
+            width: 180px;
+            height: 180px;
+        }
+        a, button, .service-card, .cta-button, .terminal-window, .mobile-menu-card {
+            cursor: none;
         }
         
         h1 { 
@@ -624,6 +655,8 @@
     </style>
 </head>
 <body>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="cursor-core" id="cursorCore"></div>
     <canvas id="matrixCanvas"></canvas>
 
     <nav>
@@ -978,7 +1011,36 @@ ${query.trim()}
             window.open(whatsappURL, '_blank');
         });
 
-        // === 5. MENÚ HAMBURGUESA ===
+        // === 5. CURSOR TRACKING EFFECT ===
+        const cursorGlow = document.getElementById('cursorGlow');
+        const cursorCore = document.getElementById('cursorCore');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            cursorGlow.style.left = `${mouseX}px`;
+            cursorGlow.style.top = `${mouseY}px`;
+            cursorCore.style.left = `${mouseX}px`;
+            cursorCore.style.top = `${mouseY}px`;
+        });
+
+        document.querySelectorAll('a, button, .service-card, .cta-button, .terminal-window, .mobile-menu-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorGlow.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursorGlow.classList.remove('active'));
+        });
+
+        function animateCursor() {
+            cursorGlow.style.left = `${mouseX}px`;
+            cursorGlow.style.top = `${mouseY}px`;
+            cursorCore.style.left = `${mouseX}px`;
+            cursorCore.style.top = `${mouseY}px`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // === 6. MENÚ HAMBURGUESA ===
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const menuClose = document.getElementById('menuClose');
