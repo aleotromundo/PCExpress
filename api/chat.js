@@ -25,8 +25,9 @@ module.exports = async function handler(req, res) {
     // modelo dado de baja, error temporal, etc.) sigue probando con los siguientes.
     const MODEL_FALLBACK_CHAIN = [
       effectiveModel,
-      'gemini-2.0-flash',  // se intenta igual por pedido explícito, aunque Google lo dio de baja el 1/jun/2026 y hoy responde error
       'gemini-3.5-flash',
+      'gemini-3-flash-preview', // preview de Gemini 3, cuotas más chicas mientras dure la fase preview
+      'gemini-2.0-flash',  // se intenta igual por pedido explícito, aunque Google lo dio de baja el 1/jun/2026 y hoy responde error
       'gemini-2.5-flash'
     ].filter((m, i, arr) => m && arr.indexOf(m) === i); // sin duplicados ni vacíos
 
