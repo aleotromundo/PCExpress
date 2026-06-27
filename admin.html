@@ -110,6 +110,35 @@
             background: linear-gradient(135deg, var(--accent), var(--accent-2));
             color: #050816;
         }
+
+        /* LOGIN GATE */
+        .login-overlay {
+            position: fixed; inset: 0; z-index: 500;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg);
+            padding: 20px;
+        }
+        .login-card {
+            width: min(92vw, 380px);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .login-card h1 { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+        .login-card .sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+        .login-card input {
+            width: 100%; padding: 12px 14px; margin-bottom: 12px;
+            border-radius: 12px; border: 1px solid var(--border);
+            background: rgba(255,255,255,0.04); color: var(--text);
+            font-size: 0.95rem;
+        }
+        .login-card input:focus { outline: none; border-color: var(--accent); }
+        .login-card .btn { width: 100%; padding: 11px 18px; }
+        .login-error { color: var(--pink); font-size: 0.8rem; margin-bottom: 10px; min-height: 1em; }
+        .app-hidden { display: none; }
         .btn:hover { opacity: 0.88; }
 
         @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
@@ -117,7 +146,17 @@
     </style>
 </head>
 <body>
-<div class="wrap">
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+        <h1>⚡ Panel Admin</h1>
+        <div class="sub">Ingresá la contraseña para ver las conversaciones</div>
+        <div class="login-error" id="loginError"></div>
+        <input type="password" id="loginPassword" placeholder="Contraseña" autocomplete="off">
+        <button class="btn" id="loginBtn">Entrar</button>
+    </div>
+</div>
+
+<div class="wrap app-hidden" id="appWrap">
 
     <div class="topbar">
         <div>
@@ -156,13 +195,54 @@
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
     // ── CONFIGURACIÓN — REEMPLAZÁ CON TUS DATOS ────────────────
-    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
-    const SUPABASE_KEY = 'TU-ANON-KEY';
+    const SUPABASE_URL = 'https://nfwnuvvnbfzorhdweqqf.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5md251dnZuYmZ6b3JoZHdlcXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MTgxMzQsImV4cCI6MjA5ODA5NDEzNH0.Dc_8y4zGX2MFz_CN8q-Rn-QsK5GS7Xi1A6hsNq3L8b8';
     // ────────────────────────────────────────────────────────────
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     const statusPill = document.getElementById('statusPill');
     const statusText = document.getElementById('statusText');
+
+    // ── CONTRASEÑA DEL PANEL — solo un filtro simple, no es seguridad real ──
+    const ADMIN_PASSWORD = 'admin123';
+    const AUTH_KEY = 'clm_admin_auth';
+
+    const loginOverlay = document.getElementById('loginOverlay');
+    const loginPassword = document.getElementById('loginPassword');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginError = document.getElementById('loginError');
+    const appWrap = document.getElementById('appWrap');
+
+    function unlockPanel() {
+        loginOverlay.style.display = 'none';
+        appWrap.classList.remove('app-hidden');
+        loadData();
+        setInterval(loadData, 30000); // auto-refresh cada 30 segundos
+    }
+
+    function tryLogin() {
+        if (loginPassword.value === ADMIN_PASSWORD) {
+            sessionStorage.setItem(AUTH_KEY, '1');
+            loginError.textContent = '';
+            unlockPanel();
+        } else {
+            loginError.textContent = 'Contraseña incorrecta.';
+            loginPassword.value = '';
+            loginPassword.focus();
+        }
+    }
+
+    loginBtn.addEventListener('click', tryLogin);
+    loginPassword.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') tryLogin();
+    });
+
+    if (sessionStorage.getItem(AUTH_KEY) === '1') {
+        unlockPanel();
+    } else {
+        loginPassword.focus();
+    }
+    // ──────────────────────────────────────────────────────────────────────
 
     function setStatus(ok) {
         statusPill.className = 'pill ' + (ok ? 'green' : 'red');
@@ -226,10 +306,6 @@
                 <div class="slast">${fmt(sessionMap[sid].last)}</div>
             </div>`).join('');
     };
-
-    loadData();
-    // Auto-refresh cada 30 segundos
-    setInterval(loadData, 30000);
 </script>
 </body>
 </html>
