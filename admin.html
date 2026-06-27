@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin · Contralamaquina</title>
+    <style>
+        :root {
+            --bg: #040816;
+            --panel: #0b1224;
+            --panel-2: #111b33;
+            --text: #f4f7ff;
+            --muted: #8fa1c1;
+            --accent: #57e5ff;
+            --accent-2: #8b5cff;
+            --pink: #ff6eb6;
+            --border: rgba(255,255,255,0.1);
+            --radius: 18px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            background: radial-gradient(circle at top left, rgba(87,229,255,0.1), transparent 28%),
+                        radial-gradient(circle at bottom right, rgba(255,110,182,0.1), transparent 30%),
+                        var(--bg);
+            color: var(--text); min-height: 100vh;
+        }
+        .wrap { max-width: 1280px; margin: 0 auto; padding: 28px 20px 80px; }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            padding: 18px 24px;
+            background: rgba(11,18,36,0.85);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            backdrop-filter: blur(14px);
+        }
+        .topbar h1 { font-size: 1.3rem; font-weight: 800; }
+        .topbar .sub { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+        .pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 14px; border-radius: 999px;
+            font-size: 0.82rem; font-weight: 600;
+        }
+        .pill.green { background: rgba(87,229,255,0.1); color: var(--accent); border: 1px solid rgba(87,229,255,0.2); }
+        .pill.red   { background: rgba(255,110,182,0.1); color: var(--pink);  border: 1px solid rgba(255,110,182,0.2); }
+        .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+        /* STATS ROW */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card {
+            padding: 18px 20px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .stat-card .label { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 6px; }
+        .stat-card .value { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .stat-card .value.pink { color: var(--pink); }
+        .stat-card .value.purple { color: var(--accent-2); }
+
+        /* GRID */
+        .grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: 20px; }
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+
+        /* TABLE */
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        th { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+        tr:hover td { background: rgba(255,255,255,0.03); }
+        .role-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 999px;
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+        }
+        .role-badge.user { background: rgba(139,92,255,0.15); color: var(--accent-2); border: 1px solid rgba(139,92,255,0.25); }
+        .role-badge.bot  { background: rgba(87,229,255,0.1);  color: var(--accent);   border: 1px solid rgba(87,229,255,0.2); }
+        .msg-text { color: var(--muted); line-height: 1.5; max-width: 480px; }
+        .session-id { font-family: monospace; font-size: 0.75rem; color: var(--muted); }
+        .date-text { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+
+        /* SESSIONS SIDEBAR */
+        .session-item {
+            padding: 12px 14px; border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px; cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .session-item:hover { border-color: rgba(87,229,255,0.3); background: rgba(87,229,255,0.05); }
+        .session-item .sid { font-family: monospace; font-size: 0.78rem; color: var(--accent); }
+        .session-item .scount { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+        .session-item .slast  { font-size: 0.72rem; color: var(--muted); }
+
+        /* EMPTY */
+        .empty { padding: 30px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px; }
+
+        /* REFRESH */
+        .btn {
+            padding: 9px 18px; border-radius: 999px; border: none; cursor: pointer;
+            font-weight: 700; font-size: 0.85rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #050816;
+        }
+        .btn:hover { opacity: 0.88; }
+
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="topbar">
+        <div>
+            <h1>⚡ Panel Admin · Contralamaquina</h1>
+            <div class="sub">Historial de consultas del chat IA</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <span class="pill" id="statusPill"><span class="pill-dot"></span><span id="statusText">Conectando...</span></span>
+            <button class="btn" onclick="loadData()">↻ Actualizar</button>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card"><div class="label">Total mensajes</div><div class="value" id="statMessages">—</div></div>
+        <div class="stat-card"><div class="label">Sesiones</div><div class="value pink" id="statSessions">—</div></div>
+        <div class="stat-card"><div class="label">Mensajes de usuarios</div><div class="value purple" id="statUser">—</div></div>
+        <div class="stat-card"><div class="label">Respuestas IA</div><div class="value" id="statBot">—</div></div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Conversaciones recientes</h2>
+            <div id="convList" class="table-wrap">
+                <div class="empty">Cargando...</div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Sesiones activas</h2>
+            <div id="sessionList"><div class="empty">Cargando...</div></div>
+        </div>
+    </div>
+
+</div>
+
+<script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // ── CONFIGURACIÓN — REEMPLAZÁ CON TUS DATOS ────────────────
+    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+    const SUPABASE_KEY = 'TU-ANON-KEY';
+    // ────────────────────────────────────────────────────────────
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const statusPill = document.getElementById('statusPill');
+    const statusText = document.getElementById('statusText');
+
+    function setStatus(ok) {
+        statusPill.className = 'pill ' + (ok ? 'green' : 'red');
+        statusText.textContent = ok ? 'Supabase conectado' : 'Error de conexión';
+    }
+
+    function fmt(dateStr) {
+        return new Date(dateStr).toLocaleString('es-UY', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    }
+
+    window.loadData = async function() {
+        const { data, error } = await supabase
+            .from('chat_messages')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(200);
+
+        if (error) { setStatus(false); return; }
+        setStatus(true);
+
+        const rows = data || [];
+        document.getElementById('statMessages').textContent = rows.length;
+        const sessions = [...new Set(rows.map(r => r.session_id))];
+        document.getElementById('statSessions').textContent = sessions.length;
+        document.getElementById('statUser').textContent = rows.filter(r => r.role === 'user').length;
+        document.getElementById('statBot').textContent  = rows.filter(r => r.role === 'assistant').length;
+
+        if (!rows.length) {
+            document.getElementById('convList').innerHTML = '<div class="empty">No hay conversaciones todavía. El chat de la web guardará los mensajes aquí.</div>';
+            document.getElementById('sessionList').innerHTML = '<div class="empty">Sin sesiones aún.</div>';
+            return;
+        }
+
+        // Tabla de mensajes
+        document.getElementById('convList').innerHTML = `
+            <table>
+                <thead><tr>
+                    <th>Sesión</th><th>Rol</th><th>Mensaje</th><th>Fecha</th>
+                </tr></thead>
+                <tbody>
+                    ${rows.map(r => `
+                    <tr>
+                        <td><span class="session-id">${(r.session_id || '—').slice(0,16)}</span></td>
+                        <td><span class="role-badge ${r.role === 'user' ? 'user' : 'bot'}">${r.role === 'user' ? 'Usuario' : 'IA'}</span></td>
+                        <td><div class="msg-text">${(r.content || '').replace(/\n/g,'<br>').slice(0,300)}${(r.content||'').length>300?'…':''}</div></td>
+                        <td><div class="date-text">${fmt(r.created_at)}</div></td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+
+        // Sesiones sidebar
+        const sessionMap = {};
+        rows.forEach(r => {
+            if (!sessionMap[r.session_id]) sessionMap[r.session_id] = { count: 0, last: r.created_at };
+            sessionMap[r.session_id].count++;
+        });
+        document.getElementById('sessionList').innerHTML = sessions.map(sid => `
+            <div class="session-item">
+                <div class="sid">${sid.slice(0,20)}</div>
+                <div class="scount">${sessionMap[sid].count} mensajes</div>
+                <div class="slast">${fmt(sessionMap[sid].last)}</div>
+            </div>`).join('');
+    };
+
+    loadData();
+    // Auto-refresh cada 30 segundos
+    setInterval(loadData, 30000);
+</script>
+</body>
+</html>

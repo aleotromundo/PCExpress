@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contralamaquina | Reparación de Computadoras en Ciudad de la Costa</title>
     <meta name="description" content="Reparación de computadoras y notebooks en Ciudad de la Costa — Neptunia, El Pinar, Salinas, Pinamar y Solymar. Diagnóstico gratis, atención a domicilio sin cargo. WhatsApp con Ale: 094 691 690.">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Inter:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@300;400;700&family=Inter:wght@800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -150,7 +150,7 @@
 
         .hero { 
             position: relative; 
-            padding: 200px 0 120px; 
+            padding: 150px 0 120px; 
             overflow: hidden; 
         }
         .hero-layout {
@@ -244,7 +244,8 @@
 
         .image-functional {
             width: 100%; 
-            height: 560px; 
+            height: auto;
+            min-height: 560px;
             background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25));
             border: 1px solid rgba(87, 229, 255, 0.24); 
             border-radius: var(--radius);
@@ -256,9 +257,34 @@
             align-items: stretch;
             justify-content: center;
         }
+        .chat-launcher-button {
+            width: 100%;
+            padding: 18px 22px;
+            border: 4px solid #10213d;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #7df2ff 0%, #51c4ff 42%, #1f66b5 100%);
+            color: #0b1023;
+            font-family: 'Press Start 2P', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.25);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), 0 14px 0 #0f1832;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .chat-launcher-button:hover {
+            transform: translateY(-1px);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), 0 18px 0 #0f1832;
+        }
+        .chat-launcher-button:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), 0 10px 0 #0f1832;
+        }
         .terminal-window {
             width: 100%;
-            height: 100%;
+            height: auto;
+            min-height: 100%;
             background: rgba(2, 8, 23, 0.95);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 18px;
@@ -309,9 +335,9 @@
         }
         .terminal-body {
             padding: 16px 18px 20px;
-            height: 100%;
+            min-height: 420px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             z-index: 1;
         }
         .terminal-body::after {
@@ -587,7 +613,8 @@
                 text-align: center;
             }
             .image-functional { 
-                height: 380px; 
+                min-height: 380px; 
+                height: auto; 
                 order: -1; 
                 max-width: 700px;
                 margin: 0 auto;
@@ -628,9 +655,10 @@
 
         @media (max-width: 480px) {
             .container { padding: 0 15px; }
-            .hero { padding: 180px 0 70px; } 
+            .hero { padding: 130px 0 70px; } 
             .image-functional { 
-                height: 240px; 
+                min-height: 260px; 
+                height: auto; 
                 padding: 12px;
             }
             .console-text {
@@ -675,19 +703,21 @@
 
     <section class="hero" id="home">
         <div class="container hero-layout">
-            <div class="image-functional animate-on-scroll">
-                <div class="terminal-window">
-                    <div class="terminal-toolbar">
-                        <div class="toolbar-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+                <button class="chat-launcher-button" type="button" id="chatLauncherBtn">ConsultorIA Gratuita</button>
+                <div class="image-functional animate-on-scroll">
+                    <div class="terminal-window">
+                        <div class="terminal-toolbar">
+                            <div class="toolbar-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="terminal-title">contralamaquina@ale:~</div>
                         </div>
-                        <div class="terminal-title">contralamaquina@ale:~</div>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="terminal-status">sistema de soporte en línea · diagnóstico gratis</div>
-                        <pre class="console-text" id="consoleText"></pre>
+                        <div class="terminal-body">
+                            <pre class="console-text" id="consoleText"></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -719,31 +749,35 @@
     
     <section class="section" id="servicios">
         <div class="container">
-            <h2 class="animate-on-scroll">Servicios pensados para <span style="color: var(--color-accent);">resolverte la vida diaria.</span></h2>
+            <h2 class="animate-on-scroll">Soluciones reales para <span style="color: var(--color-accent);">tu equipo y tu negocio.</span></h2>
             <div class="service-grid">
                 <div class="service-card animate-on-scroll">
-                    <h3><span class="icon">🖥️</span> Computadoras lentas o con virus</h3>
-                    <p>Limpieza, optimización y eliminación de malware. Tu máquina como nueva, sin comprar nada nuevo.</p>
+                    <h3><span class="icon">🖥️</span> Reparación de PC y notebooks</h3>
+                    <p>Diagnóstico, mantenimiento, optimización y solución de fallas para que tu equipo vuelva a rendir como corresponde.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.1s;">
-                    <h3><span class="icon">📁</span> Recuperación de datos perdidos</h3>
-                    <p>Fotos, documentos, archivos borrados. Los recuperamos antes de declarar pérdida total. No cobramos si no podemos recuperar nada.</p>
+                    <h3><span class="icon">📁</span> Recuperación de archivos</h3>
+                    <p>Recuperamos documentos, fotos y datos importantes antes de que se pierdan definitivamente.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.2s;">
-                    <h3><span class="icon">📱</span> Tablets y celulares Android</h3>
-                    <p>Reparación de software, actualizaciones, problemas de rendimiento. Sin moverte de tu casa.</p>
+                    <h3><span class="icon">📱</span> Soporte de celulares y tablets</h3>
+                    <p>Ayuda con software, rendimiento, actualizaciones y configuración de tus dispositivos Android.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.3s;">
                     <h3><span class="icon">🔧</span> Mantenimiento preventivo</h3>
-                    <p>Revisión completa antes de que algo falle. Más barato que esperar el problema. WiFi, red, periféricos incluidos.</p>
+                    <p>Revisamos tu red, WiFi, equipos y periféricos para evitar problemas antes de que aparezcan.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.4s;">
-                    <h3><span class="icon">🎯</span> Asesoramiento informático</h3>
-                    <p>Dudas sobre tecnología, inteligencia artificial, qué equipo comprar o cómo usar mejor lo que tenés. Consulta sin cargo.</p>
+                    <h3><span class="icon">🎯</span> Asesoría técnica</h3>
+                    <p>Te orientamos sobre qué comprar, cómo mejorar tu setup o qué solución encaja mejor con tu necesidad.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.5s;">
-                    <h3><span class="icon">🌐</span> Diseño web y gráfico</h3>
-                    <p>Sitios web, aplicaciones y diseño gráfico para emprendedores y pequeños negocios de la Costa. Precios accesibles.</p>
+                    <h3><span class="icon">🌐</span> Diseño web y branding</h3>
+                    <p>Diseñamos sitios web, identidad visual y presencia digital para negocios y emprendimientos locales.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="transition-delay: 0.6s;">
+                    <h3><span class="icon">🖥️</span> Soporte remoto con AnyDesk</h3>
+                    <p>Conectamos a tu computadora de forma segura y en tiempo real usando AnyDesk. Ves en pantalla todo lo que hacemos — sin traslados, sin esperas, sin complicaciones.</p>
                 </div>
             </div>
         </div>
@@ -751,19 +785,23 @@
 
     <section class="section" id="proyectos">
         <div class="container">
-            <h2 class="animate-on-scroll">Por qué elegir <span style="color: var(--color-accent);">Contralamaquina</span></h2>
+            <h2 class="animate-on-scroll">Por qué trabajar con <span style="color: var(--color-accent);">Contralamaquina</span></h2>
             <div class="service-grid" style="gap: 20px;">
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">🚀</span> Potenciá tu equipo (Upgrades)</h3>
-                    <p>RAM, discos SSD, limpieza de hardware. Dale la potencia extra que necesita sin comprar una máquina nueva. Máximo rendimiento garantizado.</p>
+                    <h3><span class="icon">⚡</span> Mejoras concretas</h3>
+                    <p>Mejoramos rendimiento, reorganizamos sistemas y potenciamos equipos sin que tengas que reemplazarlos.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">🔄</span> Cambio de Windows sin perder archivos</h3>
-                    <p>Transición segura entre sistemas operativos o versiones. Todos tus archivos y configuraciones permanecen intactos.</p>
+                    <h3><span class="icon">🛡️</span> Resolución sin rodeos</h3>
+                    <p>Te explicamos el problema y la solución de forma simple, clara y sin tecnicismos innecesarios.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
-                    <h3><span class="icon">📍</span> Técnico local en Ciudad de la Costa</h3>
-                    <p>Atiendo en Neptunia, El Pinar, Salinas, Pinamar y Solymar. Conocés a quién le abrís la puerta. Hablás siempre directo con Ale.</p>
+                    <h3><span class="icon">📍</span> Servicio local y cercano</h3>
+                    <p>Atendemos en Ciudad de la Costa con enfoque humano, directo y cercano desde el primer contacto.</p>
+                </div>
+                <div class="service-card animate-on-scroll" style="border: 1px dashed var(--color-secondary);">
+                    <h3><span class="icon">🛋️</span> Resolvemos sin que te muevas</h3>
+                    <p>Ya sea a domicilio o por acceso remoto con AnyDesk, el técnico llega a vos — no al revés. Sin trasladar el equipo, sin filas, sin salir de tu casa. Cómodo, rápido y seguro.</p>
                 </div>
             </div>
         </div>
@@ -771,30 +809,30 @@
 
     <section class="section" id="diseno" style="background-color: #050505;">
         <div class="container">
-            <h2 class="animate-on-scroll">También hacemos <span style="color: var(--color-accent);">Diseño Web y Gráfico</span></h2>
+            <h2 class="animate-on-scroll">Diseño web y presencia digital para <span style="color: var(--color-accent);">hacer crecer tu marca.</span></h2>
             <p class="animate-on-scroll" style="text-align:center; max-width: 760px; margin: -50px auto 60px; font-size: 1.02em;">
-                Si tenés un negocio o emprendimiento en la Costa y querés una imagen más sólida y una presencia online que realmente funcione, te ayudamos con soluciones simples y profesionales.
+                Si tenés un negocio en la Costa, te ayudamos a mostrarlo mejor online con una propuesta clara, moderna y orientada a convertir visitas en clientes.
             </p>
             <div class="service-grid" style="gap: 30px;">
                 <div class="service-card animate-on-scroll" style="border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0,255,255,0.15);">
-                    <h3><span>🌐</span> Sitios Web Profesionales</h3>
-                    <p style="margin-bottom: 15px;">Página web para tu negocio, emprendimiento o servicio. Diseño moderno, adaptado a celular, con botón de WhatsApp directo y optimizado para que te encuentren en Google.</p>
-                    <p style="color: var(--color-accent); font-weight: 700;">→ Desde una landing page hasta un sitio completo</p>
+                    <h3><span>🌐</span> Landing pages y sitios</h3>
+                    <p style="margin-bottom: 15px;">Diseños modernos y funcionales para presentar tu servicio, captar clientes y dejar una buena impresión desde el primer click.</p>
+                    <p style="color: var(--color-accent); font-weight: 700;">→ Enfoque claro, rápido y profesional</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.15s; border-color: var(--color-accent); box-shadow: 0 0 20px rgba(0,255,255,0.15);">
-                    <h3><span>🎨</span> Diseño Gráfico</h3>
-                    <p style="margin-bottom: 15px;">Logos, flyers, carteles, menús, tarjetas personales y material para redes sociales. Diseño profesional con identidad propia para tu marca o negocio.</p>
-                    <p style="color: var(--color-accent); font-weight: 700;">→ Entrega digital lista para imprimir o publicar</p>
+                    <h3><span>🎨</span> Branding y diseño gráfico</h3>
+                    <p style="margin-bottom: 15px;">Logos, piezas de comunicación y materiales visuales para que tu negocio se vea más serio y memorable.</p>
+                    <p style="color: var(--color-accent); font-weight: 700;">→ Identidad visual coherente</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="transition-delay: 0.3s; border-color: var(--color-secondary); box-shadow: 0 0 20px rgba(255,0,255,0.15);">
-                    <h3><span>📱</span> Presencia en Redes Sociales</h3>
-                    <p style="margin-bottom: 15px;">Armamos tu perfil de Instagram, Facebook y Google Business desde cero, con textos, imágenes y todo optimizado para que tus clientes te encuentren.</p>
-                    <p style="color: var(--color-secondary); font-weight: 700;">→ Kit completo de presencia digital</p>
+                    <h3><span>📱</span> Presencia digital</h3>
+                    <p style="margin-bottom: 15px;">Armamos perfiles y contenido para que tu negocio se encuentre mejor en Instagram, Facebook y Google Business.</p>
+                    <p style="color: var(--color-secondary); font-weight: 700;">→ Más visibilidad, más confianza</p>
                 </div>
             </div>
             <div class="animate-on-scroll" style="text-align:center; margin-top: 50px;">
                 <a href="#contacto" class="cta-button" style="font-size: 1.2em; box-shadow: 4px 4px 0 var(--color-secondary);">
-                    CONSULTÁ PRECIO SIN COMPROMISO >>
+                    PEDÍ TU CONSULTA SIN COMPROMISO
                 </a>
             </div>
         </div>
@@ -802,10 +840,10 @@
 
     <section class="section" id="contacto" style="padding-bottom: 100px;">
         <div class="container" style="max-width: 800px; text-align: center;">
-            <h2 class="animate-on-scroll">¿Tenés un problema? <span style="color: var(--color-accent);">Escribile a Ale</span></h2>
+            <h2 class="animate-on-scroll">¿Listo para resolverlo? <span style="color: var(--color-accent);">Escribí a Ale.</span></h2>
             
             <div class="form-container animate-on-scroll">
-                <p style="color: #aaa; margin-bottom: 20px; font-size: 0.95em;">Completá el formulario y te respondo a la brevedad por WhatsApp. El diagnóstico es siempre gratis.</p>
+                <p style="color: #aaa; margin-bottom: 20px; font-size: 0.95em;">Contanos qué te pasa y te respondemos por WhatsApp con una propuesta clara. El diagnóstico inicial es gratis.</p>
                 <input type="text" id="inputName" placeholder="TU NOMBRE" required>
                 <input type="email" id="inputEmail" placeholder="EMAIL (OPCIONAL)">
                 <textarea id="inputQuery" placeholder="DESCRIBÍ EL PROBLEMA — ¿Qué equipo tenés? ¿Qué le pasa? ¿En qué zona de la Costa estás?" rows="4" required></textarea>
